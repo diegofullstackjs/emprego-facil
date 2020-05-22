@@ -32,6 +32,18 @@ class UserValidator {
             }
            
     }
+async login(req,res,next){
+        const schema = object().shape({
+            email: string().email().required(),
+            password: string().required()
+        })
+        try{
+            await schema.validate(req.body);
+            next();
+        }catch(err){
+            return res.status(200).json(err); 
+        }
+    }
 }
 
 export default new UserValidator;
