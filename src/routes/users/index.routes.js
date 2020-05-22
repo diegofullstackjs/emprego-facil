@@ -14,5 +14,9 @@ Routes.post('/create',
     UserValidator.create
 ],
 auth.create)
-
+Routes.post('/auth',
+[
+    UserValidator.login
+],
+auth.login)
 export default Routes;
