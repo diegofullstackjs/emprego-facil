@@ -1,4 +1,5 @@
 import UserModel from '../../models/usuarios.model'
+import {sign} from 'jsonwebtoken';
 class Authentication {
 
     async create(req,res){
@@ -11,6 +12,26 @@ class Authentication {
             phone: phone
         });
         return res.status(200).json(data)
+    }
+    async login(req,res) {
+        const {email,password} = req.body;
+
+        const user = await UserModel.findOne({email:email});
+
+        if(user){
+            if(password !== user.password){
+                return res.status(200).json({
+                    error: true,
+                    message: "Sua senha está errado!"
+                })
+            }
+            user.password = undefined;
+            const token = await sign({user},process.env.KEY,{expiresIn: '7d'});
+            return res.status(200).json({
+                token: token,
+                user: user
+            });
+        }
     }
 }
 
