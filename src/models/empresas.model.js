@@ -1,8 +1,12 @@
 import {Schema,model} from 'mongoose'
 
-const User =  new Schema({
+const Empresas =  new Schema({
     name: {
         type: String,
+        required: true
+    },
+    owner: {
+        type:String,
         required: true
     },
     password: {
@@ -18,18 +22,20 @@ const User =  new Schema({
         type:String,
         unique:true
     },
+    cnpj: {
+        type:String,
+        required: true,
+        unique: true
+    },
+    credit_card: {
+        name: {type:String},
+        number: {type:String},
+        cvc: {type:String},
+        expired: {type:String}
+    },
     is_active: {
         type:Boolean,
         default: true
-    },
-    credit:{
-        type:String
-    },
-    bank_account: {
-        bank_name: {type:String},
-        bank_code: {type:String},
-        bank_agency: {type:String},
-        bank_account: {type:String}
     }
 }, {timestamps:true});
-export default model('usuarios', User);
+export default model('empresas', Empresas);
